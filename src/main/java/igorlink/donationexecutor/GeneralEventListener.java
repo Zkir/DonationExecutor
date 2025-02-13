@@ -2,6 +2,7 @@ package igorlink.donationexecutor;
 
 import igorlink.service.MainConfig;
 import igorlink.service.Utils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -17,6 +18,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
+
+import java.sql.SQLException;
 
 import static igorlink.service.Utils.*;
 
@@ -44,6 +47,20 @@ public class GeneralEventListener implements Listener {
         if (!isPluginActive()) {
             sendSysMsgToPlayer(e.getPlayer(), "плагин не активен. Укажите токен и свой никнейм в файле конфигурации плагина и перезапустите сервер.");
         }
+
+        DonationExecutor p = (DonationExecutor) Bukkit.getPluginManager().getPlugin("DonationExecutor");
+
+        //medal processing and messages.
+        Integer amount = -1;
+        try {
+            amount = p.donatesDatabase.getDonateAmount(e.getPlayer().getName(), 30);
+
+        } catch (SQLException exception) {
+            Bukkit.getLogger().severe(exception.getMessage());
+        }
+        String message = "Ваш баланс донатов за последний месяц " + amount + " руб. ";
+        e.getPlayer().sendMessage(message);
+
     }
 
 

@@ -10,11 +10,16 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import static igorlink.service.Utils.*;
 
+import ru.zkir.blindsnipermc.donates.DonatesDatabase;
+import java.sql.SQLException;
+
 public final class DonationExecutor extends JavaPlugin {
     private static DonationExecutor instance;
     public static GiantMobManager giantMobManager;
     private static Boolean isRunningStatus = true;
     public StreamerPlayersManager streamerPlayersManager;
+
+    public DonatesDatabase donatesDatabase;
 
 
     @Override
@@ -33,8 +38,16 @@ public final class DonationExecutor extends JavaPlugin {
             Utils.fillTheSynonimousCharsHashMap();
         }
 
-
         Bukkit.getPluginManager().registerEvents(new GeneralEventListener(),this);
+
+        try {
+            this.donatesDatabase = new DonatesDatabase(getDataFolder().getAbsolutePath() + "/donations.db");
+        }
+        catch (SQLException e) {
+            Bukkit.getLogger().severe("Failed to connect to donation database! " + e.getMessage());
+            Bukkit.getPluginManager().disablePlugin(this);
+        }
+
 
     }
 
@@ -48,6 +61,14 @@ public final class DonationExecutor extends JavaPlugin {
         } catch (InterruptedException e) {
             logToConsole("Какая-то ебаная ошибка, похуй на нее вообще");
         }
+
+        try {
+            donatesDatabase.closeConnection();
+        } catch (SQLException e) {
+            Bukkit.getLogger().severe(e.getMessage());
+        }
+
+
     }
 
     public static DonationExecutor getInstance() {
