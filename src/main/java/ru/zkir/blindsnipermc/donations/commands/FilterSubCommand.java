@@ -1,7 +1,7 @@
-package igorlink.command;
+package ru.zkir.blindsnipermc.donations.commands;
 
-import igorlink.service.MainConfig;
-import igorlink.service.Utils;
+import ru.zkir.blindsnipermc.donations.misc.MainConfig;
+import ru.zkir.blindsnipermc.donations.misc.Utils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

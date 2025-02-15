@@ -1,6 +1,5 @@
-package igorlink.service;
+package ru.zkir.blindsnipermc.donations.misc;
 
-import com.destroystokyo.paper.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

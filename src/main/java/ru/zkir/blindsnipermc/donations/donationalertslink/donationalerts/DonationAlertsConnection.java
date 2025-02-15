@@ -1,8 +1,8 @@
-package igorlink.donationexecutor.playersmanagement.donationalerts;
+package ru.zkir.blindsnipermc.donations.donationalertslink.donationalerts;
 
 import igorlink.donationexecutor.DonationExecutor;
-import igorlink.donationexecutor.playersmanagement.Donation;
-import igorlink.service.Utils;
+import ru.zkir.blindsnipermc.donations.donationalertslink.Donation;
+import ru.zkir.blindsnipermc.donations.misc.Utils;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -12,7 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.net.URI;
 import java.net.URISyntaxException;
-import static igorlink.service.Utils.logToConsole;
+import static ru.zkir.blindsnipermc.donations.misc.Utils.logToConsole;
 
 public class DonationAlertsConnection {
     private static final String DASERVER = "https://socket.donationalerts.ru:443";
@@ -37,6 +37,8 @@ public class DonationAlertsConnection {
         Emitter.Listener donationListener = (Object... arg0) -> {
 
             JSONObject json = new JSONObject((String) arg0[0]);
+            Utils.logToConsole(json.toString());
+
             new BukkitRunnable() {
                 @Override
                 public void run() {

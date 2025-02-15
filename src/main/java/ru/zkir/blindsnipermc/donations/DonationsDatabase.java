@@ -1,11 +1,10 @@
-package ru.zkir.blindsnipermc.donates;
+package ru.zkir.blindsnipermc.donations;
 import java.sql.*;
-import org.bukkit.Bukkit;
 
-public class DonatesDatabase{
+public class DonationsDatabase {
     private final Connection connection;
 
-    public DonatesDatabase (String path) throws SQLException {
+    public DonationsDatabase(String path) throws SQLException {
         connection = DriverManager.getConnection("jdbc:sqlite:" + path);
         try (Statement statement1 = connection.createStatement()) {
             statement1.execute("CREATE TABLE IF NOT EXISTS Donates (" +

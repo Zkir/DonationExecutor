@@ -1,7 +1,7 @@
-package igorlink.command;
+package ru.zkir.blindsnipermc.donations.commands;
 
 import igorlink.donationexecutor.DonationExecutor;
-import igorlink.donationexecutor.playersmanagement.Donation;
+import ru.zkir.blindsnipermc.donations.donationalertslink.Donation;
 import org.bukkit.command.CommandSender;
 
 public class DonateSubCommand {
@@ -28,6 +28,6 @@ public class DonateSubCommand {
 
 
         //Отправляем донат на исполнение
-        DonationExecutor.getInstance().streamerPlayersManager.addToDonationsQueue(new Donation(sender, donationUsername.toString(), donationAmount+".00"));
+        DonationExecutor.getInstance().daTokenManager.addToDonationsQueue(new Donation(sender, donationUsername.toString(), donationAmount+".00"));
     }
 }

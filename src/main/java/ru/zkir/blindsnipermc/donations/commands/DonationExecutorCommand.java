@@ -1,11 +1,11 @@
-package igorlink.command;
+package ru.zkir.blindsnipermc.donations.commands;
 
-import igorlink.service.Utils;
+import ru.zkir.blindsnipermc.donations.misc.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import static igorlink.service.Utils.logToConsole;
+import static ru.zkir.blindsnipermc.donations.misc.Utils.logToConsole;
 
 public class DonationExecutorCommand extends AbstractCommand {
 

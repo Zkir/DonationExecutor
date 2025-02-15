@@ -1,4 +1,4 @@
-package igorlink.donationexecutor.playersmanagement;
+package ru.zkir.blindsnipermc.donations.donationalertslink;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;

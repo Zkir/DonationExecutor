@@ -1,21 +1,21 @@
-package igorlink.donationexecutor.playersmanagement;
+package ru.zkir.blindsnipermc.donations.donationalertslink;
 
-import igorlink.donationexecutor.playersmanagement.donationalerts.DonationAlertsToken;
+import ru.zkir.blindsnipermc.donations.donationalertslink.donationalerts.DonationAlertsToken;
 import igorlink.donationexecutor.DonationExecutor;
-import igorlink.service.MainConfig;
-import igorlink.service.Utils;
+import ru.zkir.blindsnipermc.donations.misc.MainConfig;
+import ru.zkir.blindsnipermc.donations.misc.Utils;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-public class StreamerPlayersManager {
+public class DATokenManager {
     private final List<DonationAlertsToken> listOfDonationAlertsTokens = new ArrayList<>();
 
     //Таймер будет выполнять донаты из очередей игроков каждые 2 сек, если они живы и онлайн - выполняем донат и убираем его из очереди
-    public StreamerPlayersManager() {
+    public DATokenManager() {
         getTokensFromConfig();
         new BukkitRunnable() {
             @Override
@@ -46,14 +46,6 @@ public class StreamerPlayersManager {
         Utils.logToConsole("Было добавлено §b" + listOfDonationAlertsTokens.size() + " §fтокенов, с которыми связано §b" + numOfStreamerPlayers + " §fигроков.");
     }
 
-    public StreamerPlayer getStreamerPlayer(@NotNull String name) {
-        for (DonationAlertsToken token : listOfDonationAlertsTokens) {
-            if (token.getStreamerPlayer(name) != null) {
-                return token.getStreamerPlayer(name);
-            }
-        }
-        return null;
-    }
 
     public void reload() throws InterruptedException {
         for (DonationAlertsToken token : listOfDonationAlertsTokens) {

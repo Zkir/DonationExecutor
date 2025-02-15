@@ -1,4 +1,4 @@
-package igorlink.command;
+package ru.zkir.blindsnipermc.donations.commands;
 
 import igorlink.donationexecutor.DonationExecutor;
 import org.bukkit.command.Command;

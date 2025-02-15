@@ -1,10 +1,9 @@
-package igorlink.service;
+package ru.zkir.blindsnipermc.donations.misc;
 
 import igorlink.donationexecutor.DonationExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class MainConfig {

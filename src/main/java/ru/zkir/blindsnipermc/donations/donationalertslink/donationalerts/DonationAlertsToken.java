@@ -1,16 +1,14 @@
-package igorlink.donationexecutor.playersmanagement.donationalerts;
+package ru.zkir.blindsnipermc.donations.donationalertslink.donationalerts;
 
-import igorlink.donationexecutor.DonationExecutor;
-import igorlink.donationexecutor.Executor;
-import igorlink.donationexecutor.playersmanagement.Donation;
-import igorlink.donationexecutor.playersmanagement.StreamerPlayer;
-import igorlink.service.MainConfig;
-import igorlink.service.Utils;
+import ru.zkir.blindsnipermc.donations.DonationProcessor;
+import ru.zkir.blindsnipermc.donations.streameractions.Executor;
+import ru.zkir.blindsnipermc.donations.donationalertslink.Donation;
+import ru.zkir.blindsnipermc.donations.streameractions.StreamerPlayer;
+import ru.zkir.blindsnipermc.donations.misc.MainConfig;
+import ru.zkir.blindsnipermc.donations.misc.Utils;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-import org.jetbrains.annotations.NotNull;
+
 import java.net.URISyntaxException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -52,46 +50,12 @@ public class DonationAlertsToken {
         }
     }
 
-    public void addStreamerPlayer(@NotNull String streamerPlayerName) {
-        listOfStreamerPlayers.add(new StreamerPlayer(streamerPlayerName, this));
-    }
-
-    public StreamerPlayer getStreamerPlayer(@NotNull String name) {
-        for (StreamerPlayer p : listOfStreamerPlayers) {
-            if (p.getName().equals(name)) {
-                return p;
-            }
-        }
-        return null;
-    }
-
     //Добавление доната в очередь
     public void addToDonationsQueue(Donation donation) {
-        DonationExecutor p = (DonationExecutor) Bukkit.getPluginManager().getPlugin("DonationExecutor");
 
-        String donater_name = donation.getName();
-        Integer amount = Math.round(Float.valueOf(donation.getAmount()));
-
-        OfflinePlayer donater = Bukkit.getServer().getOfflinePlayer(donater_name);
-        //NOTE: it seems that hasPlayedBefore() does NOT work correctly for bedrock players.
-        if (donater.hasPlayedBefore() || donater_name.charAt(0) == '.') {
-            String donater_uuid = donater.getUniqueId().toString();
-            try {
-                p.donatesDatabase.addPlayerDonate(donater_uuid, donater_name, amount);
-                String command = "eco give " + donater_name +" " + amount*10;
-                Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), command);
-
-
-
-                Utils.logToConsole("Донат от §b" + donation.getName() + "§f в размере §b" + donation.getAmount() + " руб.§f был обработан и отправлен в очередь на выполнение.");
-            } catch (SQLException e) {
-                Bukkit.getLogger().severe(e.getMessage());
-            }
-        }
-        else{
-            Utils.logToConsole("Донат от §b" + donation.getName() + "§f в размере §b" + donation.getAmount() + " руб.§f  НЕ обработан. ТАКОЙ ИГРОК НЕ НАЙДЕН ");
-        }
-
+        //even before donation is put into the "queue",
+        // some actions can be done just immediately.
+        DonationProcessor.immediateDonationProcessing(donation);
 
         String execution;
         for (StreamerPlayer sp : listOfStreamerPlayers) {

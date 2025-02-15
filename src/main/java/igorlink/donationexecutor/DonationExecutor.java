@@ -1,25 +1,22 @@
 package igorlink.donationexecutor;
 
-import igorlink.command.DonationExecutorCommand;
-import igorlink.donationexecutor.executionsstaff.executionsmanagement.executions.inventory.ShitToInventory;
-import igorlink.donationexecutor.executionsstaff.giantmobs.GiantMobManager;
-import igorlink.donationexecutor.playersmanagement.StreamerPlayersManager;
-import igorlink.service.MainConfig;
-import igorlink.service.Utils;
+import ru.zkir.blindsnipermc.donations.commands.DonationExecutorCommand;
+import ru.zkir.blindsnipermc.donations.donationalertslink.DATokenManager;
+import ru.zkir.blindsnipermc.donations.misc.MainConfig;
+import ru.zkir.blindsnipermc.donations.misc.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import static igorlink.service.Utils.*;
+import static ru.zkir.blindsnipermc.donations.misc.Utils.*;
 
-import ru.zkir.blindsnipermc.donates.DonatesDatabase;
+import ru.zkir.blindsnipermc.donations.DonationsDatabase;
 import java.sql.SQLException;
 
 public final class DonationExecutor extends JavaPlugin {
     private static DonationExecutor instance;
-    public static GiantMobManager giantMobManager;
     private static Boolean isRunningStatus = true;
-    public StreamerPlayersManager streamerPlayersManager;
+    public DATokenManager daTokenManager;
 
-    public DonatesDatabase donatesDatabase;
+    public DonationsDatabase donationsDatabase;
 
 
     @Override
@@ -32,8 +29,7 @@ public final class DonationExecutor extends JavaPlugin {
         }
 
         if (CheckNameAndToken()) {
-            streamerPlayersManager = new StreamerPlayersManager();
-            giantMobManager = new GiantMobManager(this);
+            daTokenManager = new DATokenManager();
             new DonationExecutorCommand();
             Utils.fillTheSynonimousCharsHashMap();
         }
@@ -41,7 +37,7 @@ public final class DonationExecutor extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new GeneralEventListener(),this);
 
         try {
-            this.donatesDatabase = new DonatesDatabase(getDataFolder().getAbsolutePath() + "/donations.db");
+            this.donationsDatabase = new DonationsDatabase(getDataFolder().getAbsolutePath() + "/donations.db");
         }
         catch (SQLException e) {
             Bukkit.getLogger().severe("Failed to connect to donation database! " + e.getMessage());
@@ -56,14 +52,14 @@ public final class DonationExecutor extends JavaPlugin {
         try {
             isRunningStatus = false;
             if (CheckNameAndToken()) {
-                streamerPlayersManager.stop();
+                daTokenManager.stop();
             }
         } catch (InterruptedException e) {
             logToConsole("Какая-то ебаная ошибка, похуй на нее вообще");
         }
 
         try {
-            donatesDatabase.closeConnection();
+            donationsDatabase.closeConnection();
         } catch (SQLException e) {
             Bukkit.getLogger().severe(e.getMessage());
         }

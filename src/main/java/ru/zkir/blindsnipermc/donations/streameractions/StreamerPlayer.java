@@ -1,11 +1,10 @@
-package igorlink.donationexecutor.playersmanagement;
+package ru.zkir.blindsnipermc.donations.streameractions;
 
-import com.destroystokyo.paper.event.entity.EntityAddToWorldEvent;
-import igorlink.donationexecutor.playersmanagement.donationalerts.DonationAlertsToken;
+import ru.zkir.blindsnipermc.donations.donationalertslink.Donation;
+import ru.zkir.blindsnipermc.donations.donationalertslink.donationalerts.DonationAlertsToken;
 import igorlink.donationexecutor.DonationExecutor;
-import igorlink.donationexecutor.Executor;
-import igorlink.service.MainConfig;
-import igorlink.service.Utils;
+import ru.zkir.blindsnipermc.donations.misc.MainConfig;
+import ru.zkir.blindsnipermc.donations.misc.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Item;
@@ -37,7 +36,7 @@ public class StreamerPlayer {
             if (!(amount==null)) {
                 listOfAmounts.put(amount, execName);
             } else {
-                Utils.logToConsole("Сумма доната, необходимая для " + execName + " для стримера " + streamerPlayerName + " не найдена. Проверьте правильность заполнения файла конфигурации DonationExecutor.yml в папке с именем плагина.");
+                //Utils.logToConsole("Сумма доната, необходимая для " + execName + " для стримера " + streamerPlayerName + " не найдена. Проверьте правильность заполнения файла конфигурации DonationExecutor.yml в папке с именем плагина.");
             }
         }
     }
