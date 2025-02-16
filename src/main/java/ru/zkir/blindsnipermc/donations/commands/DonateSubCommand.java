@@ -1,6 +1,6 @@
 package ru.zkir.blindsnipermc.donations.commands;
 
-import igorlink.donationexecutor.DonationExecutor;
+import ru.zkir.blindsnipermc.donations.donationalertslink.DADonationEvent;
 import ru.zkir.blindsnipermc.donations.donationalertslink.Donation;
 import org.bukkit.command.CommandSender;
 
@@ -25,9 +25,10 @@ public class DonateSubCommand {
                 donationUsername.append(args[i]);
             }
         }
+        Donation donation =  new Donation(sender, donationUsername.toString(), donationAmount+".00");
 
+        DADonationEvent donationEvent = new DADonationEvent(donation);
+        donationEvent.callEvent();
 
-        //Отправляем донат на исполнение
-        DonationExecutor.getInstance().daTokenManager.addToDonationsQueue(new Donation(sender, donationUsername.toString(), donationAmount+".00"));
     }
 }

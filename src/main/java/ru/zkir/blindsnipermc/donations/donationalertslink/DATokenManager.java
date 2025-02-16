@@ -70,6 +70,8 @@ public class DATokenManager {
     }
 
     public void addToDonationsQueue(Donation donation) {
+        //this method is activated from console, not from web-socket!!
+        //so in this case there is no token, so donation is added for ALL tokens and ALL streamer players.
         for (DonationAlertsToken token : listOfDonationAlertsTokens) {
             token.addToDonationsQueue(donation);
         }

@@ -74,37 +74,6 @@ public class Utils {
 
     }
 
-    public static Vector genVec(Location a, Location b, Boolean isNormalized) {
-        Vector vec = locToVec(b).clone().subtract(locToVec(a));
-        if (isNormalized) {
-            return vec.normalize();
-        } else {
-            return vec;
-        }
-    }
-
-    public static Vector genVec(Location a, Location b) {
-        Vector vec = locToVec(b).clone().subtract(locToVec(a));
-            return vec.normalize();
-    }
-
-    public static Vector locToVec(Location loc) {
-        return new Vector(loc.getX(), loc.getY(), loc.getZ());
-    }
-
-    public static String cutOffKopeykis(String donationAmountWithKopeykis) {
-        StringBuilder amountWithoutKopeykis = new StringBuilder();
-        for (int i = 0; i <= donationAmountWithKopeykis.length() - 1; i++) {
-            if (donationAmountWithKopeykis.charAt(i) == '.') {
-                break;
-            } else if (donationAmountWithKopeykis.charAt(i) != ' ') {
-                amountWithoutKopeykis.append(donationAmountWithKopeykis.charAt(i));
-            }
-        }
-
-        return amountWithoutKopeykis.toString();
-    }
-
     public static void fillTheSynonimousCharsHashMap() {
         mapOfSynonimousChars.put('h', (Arrays.asList('x', 'х', 'н', 'n'))); //eng
         mapOfSynonimousChars.put('n', (Arrays.asList('н', 'й', 'и'))); //eng

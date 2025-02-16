@@ -14,11 +14,11 @@ public class DonationProcessor {
     //processing of the donations for the purposes of BlindSniperMC plugin
     // 1. donation is recorded in the DB
     // 2. donater is given in-game currency.
-    public static void immediateDonationProcessing(@NotNull Donation donation){
+    public static void processDonation(@NotNull Donation donation){
         DonationExecutor p = DonationExecutor.getInstance();
 
         String donater_name = donation.getName();
-        Integer amount = Math.round(Float.parseFloat(donation.getAmount()));
+        long amount = Math.round(donation.getAmount());
 
         OfflinePlayer donater = Bukkit.getServer().getOfflinePlayer(donater_name);
         //NOTE: it seems that hasPlayedBefore() does NOT work correctly for bedrock players.
@@ -29,7 +29,7 @@ public class DonationProcessor {
                 String command = "eco give " + donater_name +" " + amount*10;
                 Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), command);
 
-                Utils.logToConsole("Донат от §b" + donation.getName() + "§f в размере §b" + donation.getAmount() + " руб.§f был обработан и отправлен в очередь на выполнение.");
+                Utils.logToConsole("Донат от §b" + donation.getName() + "§f в размере §b" + donation.getAmount() + " руб.§f обработан .");
             } catch (SQLException e) {
                 Bukkit.getLogger().severe(e.getMessage());
             }

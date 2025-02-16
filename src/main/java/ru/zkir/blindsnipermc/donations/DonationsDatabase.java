@@ -23,14 +23,14 @@ public class DonationsDatabase {
         }
     }
 
-    public void addPlayerDonate( String donater_uuid, String donater_name, Integer amount) throws SQLException {
+    public void addPlayerDonate( String donater_uuid, String donater_name, Long amount) throws SQLException {
         String given_date = java.time.Instant.now().toString();
         //this should error if the player donate already exists
         try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Donates (donater_uuid, donater_name, donate_date, donate_amount ) VALUES (?, ?, ?, ?)")) {
             preparedStatement.setString(1, donater_uuid);
             preparedStatement.setString(2, donater_name);
             preparedStatement.setString(3, given_date);
-            preparedStatement.setInt(4, amount);
+            preparedStatement.setLong(4, amount);
             preparedStatement.executeUpdate();
         }
     }

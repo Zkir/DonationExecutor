@@ -1,6 +1,7 @@
 package ru.zkir.blindsnipermc.donations.donationalertslink.donationalerts;
 
 import igorlink.donationexecutor.DonationExecutor;
+import ru.zkir.blindsnipermc.donations.donationalertslink.DADonationEvent;
 import ru.zkir.blindsnipermc.donations.donationalertslink.Donation;
 import ru.zkir.blindsnipermc.donations.misc.Utils;
 import io.socket.client.IO;
@@ -37,7 +38,7 @@ public class DonationAlertsConnection {
         Emitter.Listener donationListener = (Object... arg0) -> {
 
             JSONObject json = new JSONObject((String) arg0[0]);
-            Utils.logToConsole(json.toString());
+            //Utils.logToConsole(json.toString());
 
             new BukkitRunnable() {
                 @Override
@@ -58,14 +59,18 @@ public class DonationAlertsConnection {
 
                     donationAmount = json.getString("amount_formatted");
 
-                    DonationAlertsConnection.this.donationAlertsToken.
-                            addToDonationsQueue(new Donation(
+                    Donation donation = new Donation(
                             Bukkit.getConsoleSender(),
                             donationUsername,
-                            donationAmount)
-                            );
+                            donationAmount);
+
+                    DonationAlertsConnection.this.donationAlertsToken.
+                            addToDonationsQueue(donation);
 
                     Utils.addSum(json.getInt("amount_main"));
+
+                    DADonationEvent donationEvent = new DADonationEvent(donation);
+                    donationEvent.callEvent();
 
                 }
             }.runTask(DonationExecutor.getInstance());

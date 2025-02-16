@@ -1,11 +1,12 @@
 package ru.zkir.blindsnipermc.donations.donationalertslink.donationalerts;
 
-import ru.zkir.blindsnipermc.donations.DonationProcessor;
-import ru.zkir.blindsnipermc.donations.streameractions.Executor;
 import ru.zkir.blindsnipermc.donations.donationalertslink.Donation;
-import ru.zkir.blindsnipermc.donations.streameractions.StreamerPlayer;
 import ru.zkir.blindsnipermc.donations.misc.MainConfig;
 import ru.zkir.blindsnipermc.donations.misc.Utils;
+
+import ru.zkir.blindsnipermc.donations.streameractions.Executor;
+import ru.zkir.blindsnipermc.donations.streameractions.StreamerPlayer;
+
 import org.bukkit.Bukkit;
 
 import java.net.URISyntaxException;
@@ -43,8 +44,8 @@ public class DonationAlertsToken {
                     if (donation==null) {
                         continue;
                     }
-                    Utils.logToConsole("Отправлен на выполнение донат §b" + donation.getexecutionName() + "§f для стримера §b" + sp.getName() + "§f от донатера §b" + donation.getName());
-                    Executor.DoExecute(sp.getName(), donation.getName(), donation.getAmount(), donation.getexecutionName());
+                    Utils.logToConsole("Отправлен на выполнение донат §b" + donation.getExecutionName() + "§f для стримера §b" + sp.getName() + "§f от донатера §b" + donation.getName());
+                    Executor.DoExecute(sp.getName(), donation.getName(), donation.getAmount(), donation.getExecutionName());
             }
 
         }
@@ -53,15 +54,11 @@ public class DonationAlertsToken {
     //Добавление доната в очередь
     public void addToDonationsQueue(Donation donation) {
 
-        //even before donation is put into the "queue",
-        // some actions can be done just immediately.
-        DonationProcessor.immediateDonationProcessing(donation);
-
         String execution;
         for (StreamerPlayer sp : listOfStreamerPlayers) {
-            execution = sp.checkExecution(Utils.cutOffKopeykis(donation.getAmount()));
+            execution = sp.checkExecution(String.valueOf(Math.round(donation.getAmount())));
             if (!(execution == null)) {
-                donation.setexecutionName(execution);
+                donation.setExecutionName(execution);
                 sp.putDonationToQueue(donation);
                 return;
             }

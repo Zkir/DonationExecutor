@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 public class Donation {
     private CommandSender sender;
     private String username;
-    private String amount;
+    private Double amount;
 
     private String executionName = null;
 
@@ -16,12 +16,12 @@ public class Donation {
 
     public Donation(CommandSender _sender, String _username, String _amount) {
         sender = _sender;
-        if (_username.equals("")) {
+        if (_username.isEmpty()) {
             username = "Аноним";
         } else {
             username = _username;
         }
-        amount = _amount;
+        amount = Double.parseDouble(_amount);
     }
 
     public CommandSender getSender() {
@@ -32,15 +32,15 @@ public class Donation {
         return username;
     }
 
-    public String getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public String getexecutionName() {
+    public String getExecutionName() {
         return executionName;
     }
 
-    public void setexecutionName(String _executionName) {
+    public void setExecutionName(String _executionName) {
         executionName = _executionName;
     }
 

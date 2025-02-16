@@ -2,12 +2,17 @@ package igorlink.donationexecutor;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import ru.zkir.blindsnipermc.donations.DonationProcessor;
+import ru.zkir.blindsnipermc.donations.donationalertslink.DADonationEvent;
+import ru.zkir.blindsnipermc.donations.donationalertslink.Donation;
 import ru.zkir.blindsnipermc.donations.misc.MainConfig;
 import ru.zkir.blindsnipermc.donations.misc.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import ru.zkir.blindsnipermc.donations.streameractions.StreamerActionManager;
+
 import java.sql.SQLException;
 import static ru.zkir.blindsnipermc.donations.misc.Utils.*;
 
@@ -16,7 +21,7 @@ public class GeneralEventListener implements Listener {
 
     //Закачка ресурспака и оповещение о том, что плагин не активен, если он не активен
     @EventHandler
-    public void onJoin(PlayerJoinEvent e) {
+    public void onPlayerJoin(PlayerJoinEvent e) {
 
         if (!isPluginActive()) {
             sendSysMsgToPlayer(e.getPlayer(), "плагин не активен. Укажите токен и свой никнейм в файле конфигурации плагина и перезапустите сервер.");
@@ -38,7 +43,7 @@ public class GeneralEventListener implements Listener {
         player.sendMessage(message);
 
         ChatColor color_code;
-        String displayname = player.getName();
+        String display_name;
         String command = "nick "+ player.getName() +" off";
         //Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), command);
 
@@ -59,8 +64,8 @@ public class GeneralEventListener implements Listener {
             color_code = ChatColor.GOLD;
         }
 
-        displayname = color_code + player.getName();
-        //command = "nick " + player.getName() + " " + displayname;
+        display_name = color_code + player.getName();
+        //command = "nick " + player.getName() + " " + display_name;
 
         command = "pex user " + player.getName() + " prefix " + color_code;
         if (amount>0){
@@ -68,10 +73,22 @@ public class GeneralEventListener implements Listener {
         }
 
         Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), command);
-        player.setPlayerListName(displayname);
+        player.setPlayerListName(display_name);
         //TODO: what is the proper way to reset list name?
 
     }
+
+    @EventHandler
+    public void onDonation(DADonationEvent event) {
+       Donation donation = event.getDonation();
+       logToConsole("Donation event raised! "+ donation.getName() + " donated " + donation.getAmount() +" RUB" );
+
+       DonationProcessor.processDonation(donation);
+       StreamerActionManager.processDonation(donation);
+
+       //note: significant part of actual processing is done on player join.
+    }
+
 
 
 }

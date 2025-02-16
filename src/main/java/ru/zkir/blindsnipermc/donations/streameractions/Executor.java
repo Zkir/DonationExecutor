@@ -21,7 +21,7 @@ public class Executor {
 
 
 
-    public static void DoExecute(String streamerName, String donationUsername, String fullDonationAmount, String executionName) {
+    public static void DoExecute(String streamerName, String donationUsername, Double fullDonationAmount, String executionName) {
 
         Player streamerPlayer = getPlayerExact(streamerName);
         boolean canContinue = true;
@@ -47,12 +47,12 @@ public class Executor {
 
 
         if (!canContinue) {
-            logToConsole("Донат от §b" + donationUsername + " §f в размере §b" + fullDonationAmount + "§f выполнен из-за того, что целевой стример был недоступен.");
+            logToConsole("Донат от §b" + donationUsername + " §f в размере §b" + fullDonationAmount + "§f не выполнен из-за того, что целевой стример был недоступен.");
             return;
         }
 
         //Actually we do nothing.
-
+        logToConsole("Молчаливое выполнение "+ executionName +" (Донат от §b" + donationUsername + " §f в размере §b" + fullDonationAmount + "§f) ");
     }
 
 
