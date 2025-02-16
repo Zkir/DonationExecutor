@@ -7,14 +7,15 @@ public class Donation {
     private CommandSender sender;
     private String username;
     private Double amount;
+    private String token;
 
     private String executionName = null;
 
-    public Donation(String _username, String _amount) {
-        new Donation(Bukkit.getConsoleSender(), _username, _amount);
+    public Donation(String _username, String _amount, String _token) {
+        new Donation(Bukkit.getConsoleSender(), _username, _amount, _token);
     }
 
-    public Donation(CommandSender _sender, String _username, String _amount) {
+    public Donation(CommandSender _sender, String _username, String _amount , String _token) {
         sender = _sender;
         if (_username.isEmpty()) {
             username = "Аноним";
@@ -22,6 +23,7 @@ public class Donation {
             username = _username;
         }
         amount = Double.parseDouble(_amount);
+        token= _token;
     }
 
     public CommandSender getSender() {
@@ -34,6 +36,10 @@ public class Donation {
 
     public Double getAmount() {
         return amount;
+    }
+
+    public String getDaToken(){
+        return token;
     }
 
     public String getExecutionName() {

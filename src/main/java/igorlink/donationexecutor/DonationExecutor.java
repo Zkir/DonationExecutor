@@ -9,12 +9,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 import static ru.zkir.blindsnipermc.donations.misc.Utils.*;
 
 import ru.zkir.blindsnipermc.donations.DonationsDatabase;
+import ru.zkir.blindsnipermc.donations.streameractions.StreamerActionManager;
+
 import java.sql.SQLException;
 
 public final class DonationExecutor extends JavaPlugin {
     private static DonationExecutor instance;
     private static Boolean isRunningStatus = true;
     public DATokenManager daTokenManager;
+    public StreamerActionManager streamerActionManager;
 
     public DonationsDatabase donationsDatabase;
 
@@ -30,6 +33,7 @@ public final class DonationExecutor extends JavaPlugin {
 
         if (CheckNameAndToken()) {
             daTokenManager = new DATokenManager();
+            streamerActionManager = new StreamerActionManager();
             new DonationExecutorCommand();
             Utils.fillTheSynonimousCharsHashMap();
         }

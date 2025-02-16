@@ -5,13 +5,10 @@ import org.bukkit.entity.Player;
 import ru.zkir.blindsnipermc.donations.DonationProcessor;
 import ru.zkir.blindsnipermc.donations.donationalertslink.DADonationEvent;
 import ru.zkir.blindsnipermc.donations.donationalertslink.Donation;
-import ru.zkir.blindsnipermc.donations.misc.MainConfig;
-import ru.zkir.blindsnipermc.donations.misc.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import ru.zkir.blindsnipermc.donations.streameractions.StreamerActionManager;
 
 import java.sql.SQLException;
 import static ru.zkir.blindsnipermc.donations.misc.Utils.*;
@@ -83,8 +80,11 @@ public class GeneralEventListener implements Listener {
        Donation donation = event.getDonation();
        logToConsole("Donation event raised! "+ donation.getName() + " donated " + donation.getAmount() +" RUB" );
 
+       // General processing of donations: recording in db and granting donate currency to player
        DonationProcessor.processDonation(donation);
-       StreamerActionManager.processDonation(donation);
+
+       // Processing of streamer "executions"
+       DonationExecutor.getInstance().streamerActionManager.processDonation(donation);
 
        //note: significant part of actual processing is done on player join.
     }

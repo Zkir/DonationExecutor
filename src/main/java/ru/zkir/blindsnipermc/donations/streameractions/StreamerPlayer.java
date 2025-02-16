@@ -1,7 +1,6 @@
 package ru.zkir.blindsnipermc.donations.streameractions;
 
 import ru.zkir.blindsnipermc.donations.donationalertslink.Donation;
-import ru.zkir.blindsnipermc.donations.donationalertslink.donationalerts.DonationAlertsToken;
 import ru.zkir.blindsnipermc.donations.misc.MainConfig;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NotNull;
@@ -9,19 +8,21 @@ import java.util.*;
 
 public class StreamerPlayer {
     private final String streamerPlayerName;
+    private final String daToken;
     private final Queue<Donation> listOfQueuedDonations = new LinkedList<>();
     private final HashMap<String, String> listOfAmounts = new HashMap<>();
 
 
     //Инициализация нового объекта стримера-игрока
-    public StreamerPlayer(@NotNull String _streamerPlayerName, DonationAlertsToken donationAlertsToken) {
+    public StreamerPlayer(@NotNull String _streamerPlayerName, String _daToken) {
         FileConfiguration config = MainConfig.getConfig();
         streamerPlayerName = _streamerPlayerName;
+        daToken = _daToken;
 
         //Заполняем список сумм для донатов
         String amount;
         for (String execName : Executor.executionsNamesList) {
-            amount = config.getString("donation-amounts." + donationAlertsToken.getToken() + "." + streamerPlayerName + "." + execName);
+            amount = config.getString("donation-amounts." + _daToken + "." + streamerPlayerName + "." + execName);
             if (!(amount==null)) {
                 listOfAmounts.put(amount, execName);
             } else {
@@ -38,9 +39,13 @@ public class StreamerPlayer {
         return streamerPlayerName;
     }
 
+    public String getDaToken(){
+        return this.daToken;
+    }
+
     //Работа с очередью донатов
     //Поставить донат в очередь на выполнение донатов для этого игрока
-    public void putDonationToQueue(@NotNull Donation donation){
+    public void putDonationToQueue(@NotNull Donation donation) {
         listOfQueuedDonations.add(donation);
     }
 

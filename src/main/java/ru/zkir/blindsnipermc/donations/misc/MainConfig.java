@@ -14,7 +14,6 @@ public class MainConfig {
     private static int bigBoomRadius;
     private static int timeForAnnouncement;
     private static int amountOfNKVD;
-    private static String token;
     private static List<String> listOfBlackListedSubstrings = new ArrayList<>();
     public static List<String> listOfWhiteListedSubstrings = new ArrayList<>();
     private static boolean twitchFilter;
@@ -56,7 +55,6 @@ public class MainConfig {
         timeForAnnouncement = config.getInt("announcement-duration-seconds");
         amountOfNKVD = config.getInt("nkvd-officers-amount");
 
-        token = config.getString("DonationAlertsToken");
         listOfBlackListedSubstrings = config.getStringList("BlacklistedSubstrings");
         listOfWhiteListedSubstrings = config.getStringList("WhitelistedSubstrings");
 

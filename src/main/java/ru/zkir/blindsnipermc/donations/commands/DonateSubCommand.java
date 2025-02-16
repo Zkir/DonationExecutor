@@ -25,7 +25,7 @@ public class DonateSubCommand {
                 donationUsername.append(args[i]);
             }
         }
-        Donation donation =  new Donation(sender, donationUsername.toString(), donationAmount+".00");
+        Donation donation =  new Donation(sender, donationUsername.toString(), donationAmount+".00", "");
 
         DADonationEvent donationEvent = new DADonationEvent(donation);
         donationEvent.callEvent();
